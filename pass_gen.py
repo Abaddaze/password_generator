@@ -1,6 +1,6 @@
-import tkinter as Tk
 from tkinter import *
-
+from pyperclip import *
+import random
 #Make A Window Area
 window = Tk()
 window.title("Password Generator")
@@ -11,14 +11,25 @@ frame = Frame(window,width=300,height=300)
 frame.pack(expand=True)
 
 #Adding The data the will be included in the password (Letters , Numbers , Symboles )
-
 small_characters = "abcdefhijklmnopqrstuvwxyz"
 cap_characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 all_numbers = "1234567890"
 all_numbers_rev = all_numbers[::-1]
 all_symboles = "~`!@#$%^&*()_-+={[}]|\:"";'<,>.?/"
 
-#///////////////////////////////////////////////////////////////////
+#code logic in here
+#writing the logic for the generate button
+
+global all_types
+global capital_checked
+
+if (capital_checked.get()==1):
+    all_types = small_characters + cap_characters
+#display the password that includes (Small Letters , Capital Letters , 
+# Symboles , Numbers)
+
+#generate_password from all types variable using rando.choice and for loop in range method
+generated_password = [random.choice(all_types) for i in range(pass_slider.get())]
 #enteries and number variables
 mystring=StringVar()
 pass_text = StringVar()
@@ -27,9 +38,10 @@ capital_checked = IntVar()
 symbole_checked = IntVar()
 numbers_checked = IntVar()
 pass_slider = IntVar()
-#///////////////////////////////////////////////////////////////////
+
 #DESIGN THE LAYOUT (Buttons and Texbox)
 #text label to show the generated password
+
 text_Box = Label(frame,textvariable=mystring,font=("courier",25),bg="#DBDBDB",fg="#039b5f",
                  width=50)
 text_Box.place(x=0,y=40)
