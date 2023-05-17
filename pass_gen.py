@@ -1,7 +1,10 @@
 from tkinter import *
+
+import pyperclip
 from pyperclip import *
 import random
-#Make A Window Area
+
+#make a window area
 window = Tk()
 window.title("Password Generator")
 window.geometry("300x300")
@@ -10,9 +13,9 @@ window.geometry("300x300")
 frame = Frame(window,width=300,height=300)
 frame.pack(expand=True)
 
-#Adding The data the will be included in the password (Letters , Numbers , Symboles )
-small_characters = "abcdefhijklmnopqrstuvwxyz"
-cap_characters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
+#our data types for output , small chcarachters , caps , numbers , numbers in reverse order , symboles
+small_charachters = "abcdefhijklmnopqrstuvwxyz"
+cap_charachters = "ABCDEFGHIJKLMNOPQRSTUVWXYZ"
 all_numbers = "1234567890"
 all_numbers_rev = all_numbers[::-1]
 all_symboles = "~`!@#$%^&*()_-+={[}]|\:"";'<,>.?/"
@@ -20,16 +23,23 @@ all_symboles = "~`!@#$%^&*()_-+={[}]|\:"";'<,>.?/"
 #code logic in here
 #writing the logic for the generate button
 
-global all_types
-global capital_checked
 
-if (capital_checked.get()==1):
-    all_types = small_characters + cap_characters
-#display the password that includes (Small Letters , Capital Letters , 
-# Symboles , Numbers)
+def generate():
+    if (numbers_checked.get()==1):
+        all_types = small_charachters + all_numbers
+    else:
+        all_types = small_charachters
+    #display the password that includes (Small Letters , Capital Letters , 
+    # Symboles , Numbers)
 
-#generate_password from all types variable using rando.choice and for loop in range method
-generated_password = [random.choice(all_types) for i in range(pass_slider.get())]
+    #generate password from all_types variable using random.choice and for loop in range method
+    generated_password = [random.choice(all_types) for i in range(pass_slider.get())]
+    # join password output to make it in 1 sentence
+    joined_pass = "".join(generated_password)
+    # display the output on the label textbox
+    mystring.set(str(joined_pass))
+    password_length=len(joined_pass)
+    text_Box.config(width=password_length+10)
 #enteries and number variables
 mystring=StringVar()
 pass_text = StringVar()
@@ -52,21 +62,21 @@ check_symboles = Checkbutton(frame,text="Symboles",bg="#039b5f",variable=symbole
 check_symboles.place(x=40,y=90)
 
 #check button to select if the password has Numbers
-check_symboles = Checkbutton(frame,text="Numbers",bg="#039b5f",variable=numbers_checked,
+check_numbers = Checkbutton(frame,text="Numbers",bg="#039b5f",variable=numbers_checked,
                              onvalue=1,offvalue=0)
-check_symboles.place(x=130,y=90)
+check_numbers.place(x=130,y=90)
 
-#check button to select if the password has symboles
-check_symboles = Checkbutton(frame,text="Capitals",bg="#039b5f",variable=capital_checked,
+#check button to select if the password has Capitals
+check_capital = Checkbutton(frame,text="Capitals",bg="#039b5f",variable=capital_checked,
                              onvalue=1,offvalue=0)
-check_symboles.place(x=210,y=90)
+check_capital.place(x=210,y=90)
 
 #slider to choose Password Length
 pass_scale = Scale(frame, from_=0, to=24,orient=HORIZONTAL,variable=pass_slider)
 pass_scale.place(x=100,y=120)
 
 title_label = Button(frame,text="GeneratePassword",font=("Roboto",14),fg="white",bg="#039b5f",
-                     width=20,height=1,command="")
+                     width=20,height=1,command=generate)
 title_label.place(x=30,y=160)
 #///////////////////////////////////////////////////////////////////
 window.mainloop()
