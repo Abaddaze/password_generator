@@ -1,5 +1,5 @@
 from tkinter import *
-
+from PIL import Image,ImageTk
 import pyperclip
 from pyperclip import *
 import random
@@ -8,7 +8,9 @@ import random
 window = Tk()
 window.title("Password Generator")
 window.geometry("400x250")
-
+img = Image.open('copy-button-icon.png')
+resized_image = img.resize((30,30), Image.ANTIALIAS)
+copy_button =ImageTk.PhotoImage(resized_image)
 #create frame to assign buttons and labels to
 frame = Frame(window,width=400,height=300,bg="#454545")
 frame.pack(expand=True)
@@ -62,9 +64,6 @@ def generate():
     text_Box.config(width=password_length)
 def copy_pass ():
     pyperclip.copy(joined_pass)
-
-    title_label = Button(frame, text="Copy", font=("Roboto", 14), bg="#039B5F", width=10, height=1, command=copy_pass)
-    title_label.place(x=240,y=170)
 #enteries and number variables
 mystring=StringVar()
 pass_text = StringVar()
@@ -84,27 +83,28 @@ text_Box.place(relx=0.5,y=40,anchor=CENTER)
 #check button to select if the password has Symboles
 check_symboles = Checkbutton(frame,text="Symboles",bg="#FF6000",variable=symboles_checked,
                              onvalue=1,offvalue=0)
-check_symboles.place(x=40,y=65)
+check_symboles.place(x=82,y=65)
 
 #check button to select if the password has Numbers
 check_numbers = Checkbutton(frame,text="Numbers",bg="#FF6000",variable=numbers_checked,
                              onvalue=1,offvalue=0)
-check_numbers.place(x=160,y=65)
+check_numbers.place(relx=0.5,y=77,anchor=CENTER)
 
 #check button to select if the password has Capitals
 check_capital = Checkbutton(frame,text="Capitals",bg="#FF6000",variable=capital_checked,width=10,
                              onvalue=1,offvalue=0)
-check_capital.place(x=270,y=65)
+check_capital.place(x=240,y=65)
 
 #slider to choose Password Length
-pass_scale = Scale(frame, from_=12, to=36,orient=HORIZONTAL,variable=pass_slider,sliderlength=20,relief=FLAT)
-pass_scale.place(relx=0.5,y=120,anchor=CENTER)
+pass_scale = Scale(frame, from_=12, to=36,orient=HORIZONTAL,variable=pass_slider,length=250,bd=0,fg="white", bg="#454545")
+pass_scale.place(x=82,y=95)
 
 title_label = Button(frame,text="Generate Password",font=("Roboto",14),fg="black",bg="#FF6000",
                      width=15,height=1,command=generate)
-title_label.place(x=30,y=170)
+title_label.place(x=100,y=150)
 
-title_label = Button(frame, text="Copy", font=("Roboto", 14), bg="#039B5F", width=10, height=1, command=copy_pass)
-title_label.place(x=240,y=170)
+title_label = Button(frame,image=copy_button, bg="#039B5F", width=35, height=35, command=copy_pass)
+title_label.place(x=280,y=150)
+
 #///////////////////////////////////////////////////////////////////
 window.mainloop()
