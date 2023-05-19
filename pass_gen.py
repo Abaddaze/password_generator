@@ -1,13 +1,15 @@
 from tkinter import *
-from PIL import Image,ImageTk
 import pyperclip
 from pyperclip import *
 import random
+from PIL import Image,ImageTk
 
 #make a window area
 window = Tk()
 window.title("Password Generator")
 window.geometry("400x250")
+title_bar_icon = PhotoImage(file = "window_icon.png")
+window.iconphoto(False,title_bar_icon)
 img = Image.open('copy-button-icon.png')
 resized_image = img.resize((30,30), Image.ANTIALIAS)
 copy_button =ImageTk.PhotoImage(resized_image)
